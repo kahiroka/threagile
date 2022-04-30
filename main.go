@@ -4250,6 +4250,8 @@ func parseModel(inputFilename string) {
 				technicalAssetTechnology = model.BlockStorage
 			case model.Library.String():
 				technicalAssetTechnology = model.Library
+			case model.GenericServer.String():
+				technicalAssetTechnology = model.GenericServer
 			default:
 				panic(errors.New("unknown 'technology' value of technical asset '" + title + "': " + fmt.Sprintf("%v", asset.Technology)))
 			}
@@ -4416,6 +4418,8 @@ func parseModel(inputFilename string) {
 						protocol = model.WSS
 					case model.MQTT.String():
 						protocol = model.MQTT
+					case model.MQTTS.String():
+						protocol = model.MQTTS
 					case model.JDBC.String():
 						protocol = model.JDBC
 					case model.JDBC_encrypted.String():
@@ -4494,6 +4498,34 @@ func parseModel(inputFilename string) {
 						protocol = model.InProcessLibraryCall
 					case model.ContainerSpawning.String():
 						protocol = model.ContainerSpawning
+					case model.IPC.String():
+						protocol = model.IPC
+					case model.RPC.String():
+						protocol = model.RPC
+					case model.RTSP.String():
+						protocol = model.RTSP
+					case model.RTSPS.String():
+						protocol = model.RTSPS
+					case model.RTMP.String():
+						protocol = model.RTMP
+					case model.RTMPS.String():
+						protocol = model.RTMPS
+					case model.SRT.String():
+						protocol = model.SRT
+					case model.SRT_encrypted.String():
+						protocol = model.SRT_encrypted
+					case model.VISCA.String():
+						protocol = model.VISCA
+					case model.VISCA_IP.String():
+						protocol = model.VISCA_IP
+					case model.PTP_IP.String():
+						protocol = model.PTP_IP
+					case model.UVC_USB.String():
+						protocol = model.UVC_USB
+					case model.HDMI.String():
+						protocol = model.HDMI
+					case model.SDI.String():
+						protocol = model.SDI
 					default:
 						panic(errors.New("unknown 'protocol' of technical asset '" + title + "' communication link '" + commLinkTitle + "': " + fmt.Sprintf("%v", commLink.Protocol)))
 					}

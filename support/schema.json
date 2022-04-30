@@ -371,7 +371,8 @@
               "scheduler",
               "mainframe",
               "block-storage",
-              "library"
+              "library",
+              "generic-server"
             ]
           },
           "tags": {
@@ -546,6 +547,7 @@
                     "reverse-proxy-web-protocol",
                     "reverse-proxy-web-protocol-encrypted",
                     "mqtt",
+                    "mqtts",
                     "jdbc",
                     "jdbc-encrypted",
                     "odbc",
@@ -584,7 +586,21 @@
                     "jrmp",
                     "jrmp-encrypted",
                     "in-process-library-call",
-                    "container-spawning"
+                    "container-spawning",
+                    "ipc",
+                    "rpc",
+                    "rtsp",
+                    "rtsps",
+                    "rtmp",
+                    "rtmps",
+                    "srt",
+                    "srt-encrypted",
+                    "visca",
+                    "visca-ip",
+                    "pip-ip",
+                    "uvc-usb",
+                    "hdmi",
+                    "sdi"
                   ]
                 },
                 "authentication": {

@@ -609,6 +609,7 @@ const (
 	Reverse_proxy_web_protocol
 	Reverse_proxy_web_protocol_encrypted
 	MQTT
+	MQTTS
 	JDBC
 	JDBC_encrypted
 	ODBC
@@ -648,6 +649,20 @@ const (
 	JRMP_encrypted
 	InProcessLibraryCall
 	ContainerSpawning
+	IPC
+	RPC
+	RTSP
+	RTSPS
+	RTMP
+	RTMPS
+	SRT
+	SRT_encrypted
+	VISCA
+	VISCA_IP
+	PTP_IP
+	UVC_USB
+	HDMI
+	SDI
 )
 
 func ProtocolValues() []TypeEnum {
@@ -660,6 +675,7 @@ func ProtocolValues() []TypeEnum {
 		Reverse_proxy_web_protocol,
 		Reverse_proxy_web_protocol_encrypted,
 		MQTT,
+		MQTTS,
 		JDBC,
 		JDBC_encrypted,
 		ODBC,
@@ -699,16 +715,31 @@ func ProtocolValues() []TypeEnum {
 		JRMP_encrypted,
 		InProcessLibraryCall,
 		ContainerSpawning,
+		IPC,
+		RPC,
+		RTSP,
+		RTSPS,
+		RTMP,
+		RTMPS,
+		SRT,
+		SRT_encrypted,
+		VISCA,
+		VISCA_IP,
+		PTP_IP,
+		UVC_USB,
+		HDMI,
+		SDI,
 	}
 }
 
 func (what Protocol) String() string {
 	// NOTE: maintain list also in schema.json for validation in IDEs
 	return [...]string{"unknown-protocol", "http", "https", "ws", "wss", "reverse-proxy-web-protocol", "reverse-proxy-web-protocol-encrypted",
-		"mqtt", "jdbc", "jdbc-encrypted", "odbc", "odbc-encrypted",
+		"mqtt", "mqtts", "jdbc", "jdbc-encrypted", "odbc", "odbc-encrypted",
 		"sql-access-protocol", "sql-access-protocol-encrypted", "nosql-access-protocol", "nosql-access-protocol-encrypted", "binary", "binary-encrypted", "text", "text-encrypted",
 		"ssh", "ssh-tunnel", "smtp", "smtp-encrypted", "pop3", "pop3-encrypted", "imap", "imap-encrypted", "ftp", "ftps", "sftp", "scp", "ldap", "ldaps", "jms", "nfs", "smb", "smb-encrypted", "local-file-access", "nrpe", "xmpp",
-		"iiop", "iiop-encrypted", "jrmp", "jrmp-encrypted", "in-process-library-call", "container-spawning"}[what]
+		"iiop", "iiop-encrypted", "jrmp", "jrmp-encrypted", "in-process-library-call", "container-spawning",
+		"ipc", "rpc", "rtsp", "rtsps", "rtmp", "rtmps", "srt", "srt-encrypted", "visca", "visca-ip", "ptp-ip", "uvc-usb", "hdmi", "sdi"}[what]
 }
 
 func (what Protocol) IsProcessLocal() bool {
@@ -716,10 +747,11 @@ func (what Protocol) IsProcessLocal() bool {
 }
 
 func (what Protocol) IsEncrypted() bool {
-	return what == HTTPS || what == WSS || what == JDBC_encrypted || what == ODBC_encrypted ||
+	return what == HTTPS || what == WSS || what == MQTTS || what == JDBC_encrypted || what == ODBC_encrypted ||
 		what == NoSQL_access_protocol_encrypted || what == SQL_access_protocol_encrypted || what == BINARY_encrypted || what == TEXT_encrypted || what == SSH || what == SSH_tunnel ||
 		what == FTPS || what == SFTP || what == SCP || what == LDAPS || what == Reverse_proxy_web_protocol_encrypted ||
-		what == IIOP_encrypted || what == JRMP_encrypted || what == SMB_encrypted || what == SMTP_encrypted || what == POP3_encrypted || what == IMAP_encrypted
+		what == IIOP_encrypted || what == JRMP_encrypted || what == SMB_encrypted || what == SMTP_encrypted || what == POP3_encrypted || what == IMAP_encrypted ||
+		what == RTSPS || what == RTMPS || what == SRT_encrypted
 }
 
 func (what Protocol) IsPotentialDatabaseAccessProtocol(includingLaxDatabaseProtocols bool) bool {
@@ -796,6 +828,7 @@ const (
 	Mainframe
 	BlockStorage
 	Library
+	GenericServer
 )
 
 func TechnicalAssetTechnologyValues() []TypeEnum {
@@ -857,6 +890,7 @@ func TechnicalAssetTechnologyValues() []TypeEnum {
 		Mainframe,
 		BlockStorage,
 		Library,
+		GenericServer,
 	}
 }
 
@@ -869,7 +903,7 @@ func (what TechnicalAssetTechnology) String() string {
 		"container-platform", "batch-processing", "event-listener", "identity-provider", "identity-store-ldap",
 		"identity-store-database", "tool", "cli", "task", "function", "gateway", "iot-device", "message-queue", "stream-processing",
 		"service-mesh", "data-lake", "big-data-platform", "report-engine", "ai", "mail-server", "vault", "hsm", "waf", "ids", "ips",
-		"scheduler", "mainframe", "block-storage", "library"}[what]
+		"scheduler", "mainframe", "block-storage", "library", "generic-server"}[what]
 }
 
 func (what TechnicalAssetTechnology) IsWebApplication() bool {
@@ -922,7 +956,7 @@ func (what TechnicalAssetTechnology) IsLessProtectedType() bool {
 }
 
 func (what TechnicalAssetTechnology) IsUsuallyProcessingEnduserRequests() bool {
-	return what == WebServer || what == WebApplication || what == ApplicationServer || what == ERP || what == WebServiceREST || what == WebServiceSOAP || what == EJB || what == ReportEngine
+	return what == WebServer || what == WebApplication || what == ApplicationServer || what == ERP || what == WebServiceREST || what == WebServiceSOAP || what == EJB || what == ReportEngine || what == GenericServer
 }
 
 func (what TechnicalAssetTechnology) IsUsuallyStoringEnduserData() bool {
