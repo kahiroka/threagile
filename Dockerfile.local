@@ -19,6 +19,17 @@ RUN go version
 RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o raa.so raa/raa/raa.go
 RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o dummy.so raa/dummy/dummy.go
 RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o demo-rule.so risks/custom/demo/demo-rule.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o improper-certificate-validation.so risks/custom/kahiroka/improper-certificate-validation.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o improper-ssh-fingerprint-validation.so risks/custom/kahiroka/improper-ssh-fingerprint-validation.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o weak-cipher-suites.so risks/custom/kahiroka/weak-cipher-suites.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o personal-identifiable-information.so risks/custom/kahiroka/personal-identifiable-information.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o clickjacking.so risks/custom/kahiroka/clickjacking.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o secrets-stored-in-cleartext.so risks/custom/kahiroka/secrets-stored-in-cleartext.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o secrets-transmitted-in-cleartext.so risks/custom/kahiroka/secrets-transmitted-in-cleartext.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o vulnerable-web-browser.so risks/custom/kahiroka/vulnerable-web-browser.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o improper-tokens-generation.so risks/custom/kahiroka/improper-tokens-generation.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o sensitive-log-stored-in-cleartext.so risks/custom/kahiroka/sensitive-log-stored-in-cleartext.go
+RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -buildmode=plugin -o improper-integrity-validation.so risks/custom/kahiroka/improper-integrity-validation.go
 RUN GOOS=linux go build -a -trimpath -ldflags="-s -w -X main.buildTimestamp=$(date '+%Y%m%d%H%M%S')" -gcflags="all=-trimpath=/src" -asmflags="all=-trimpath=/src" -o threagile
 # add the -race parameter to go build call in order to instrument with race condition detector: https://blog.golang.org/race-detector
 
@@ -45,6 +56,17 @@ COPY --from=build /app/threagile /app/threagile
 COPY --from=build /app/raa.so /app/raa.so
 COPY --from=build /app/dummy.so /app/dummy.so
 COPY --from=build /app/demo-rule.so /app/demo-rule.so
+COPY --from=build /app/improper-certificate-validation.so /app/improper-certificate-validation.so
+COPY --from=build /app/improper-ssh-fingerprint-validation.so /app/improper-ssh-fingerprint-validation.so
+COPY --from=build /app/weak-cipher-suites.so /app/weak-cipher-suites.so
+COPY --from=build /app/personal-identifiable-information.so /app/personal-identifiable-information.so
+COPY --from=build /app/clickjacking.so /app/clickjacking.so
+COPY --from=build /app/secrets-stored-in-cleartext.so /app/secrets-stored-in-cleartext.so
+COPY --from=build /app/secrets-transmitted-in-cleartext.so /app/secrets-transmitted-in-cleartext.so
+COPY --from=build /app/vulnerable-web-browser.so /app/vulnerable-web-browser.so
+COPY --from=build /app/improper-tokens-generation.so /app/improper-tokens-generation.so
+COPY --from=build /app/sensitive-log-stored-in-cleartext.so /app/sensitive-log-stored-in-cleartext.so
+COPY --from=build /app/improper-integrity-validation.so /app/improper-integrity-validation.so
 COPY --from=build /app/LICENSE.txt /app/LICENSE.txt
 COPY --from=build /app/report/template/background.pdf /app/background.pdf
 COPY --from=build /app/support/openapi.yaml /app/openapi.yaml
